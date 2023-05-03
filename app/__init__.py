@@ -8,6 +8,12 @@ from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 # local imports
 from config import app_config
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+import urllib.parse
+
+
+load_dotenv()
 
 # db variable initialization
 db = SQLAlchemy()
@@ -21,6 +27,10 @@ login_manager = LoginManager()
 def create_app(config_name):
     if os.getenv('FLASK_CONFIG') == "production":
         app = Flask(__name__)
+        # try:
+        #     engine = create_engine('postgresql+pg8000://postgres@localhost:5432/abhigyan')
+        # except Exception as e:
+        #     print(e)
         app.config.update(
             SECRET_KEY=os.getenv('SECRET_KEY'),
             SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI')
